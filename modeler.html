@@ -75,6 +75,9 @@
           alert('Diagram exported. Check the developer tools!');
 
           console.log('DIAGRAM', result.xml);
+myWindow = window.open("data:text/xml," + encodeURIComponent(result),
+                       "_blank", "width=200,height=100");
+myWindow.focus();
         } catch (err) {
 
           console.error('could not save BPMN 2.0 diagram', err);
