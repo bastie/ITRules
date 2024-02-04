@@ -19,7 +19,7 @@
       <incoming>sid-4DC479E5-5C20-4948-BCFC-9EC5E2F66D8D</incoming>
       <outgoing>sid-EE8A7BA0-5D66-4F8B-80E3-CC2751B3856A</outgoing>
     </task>
-    <task id="sid-E49425CF-8287-4798-B622-D2A7D78EF00B" name="Open product information in mobile  app">
+    <task id="sid-E49425CF-8287-4798-B622-D2A7D78EF00B" name="Öffnen Produktinformation in der mobilen  Anwendung">
       <incoming>sid-8B820AF5-DC5C-4618-B854-E08B71FB55CB</incoming>
       <outgoing>sid-57EB1F24-BD94-479A-BF1F-57F1EAA19C6C</outgoing>
     </task>
