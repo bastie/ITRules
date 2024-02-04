@@ -4,16 +4,13 @@
     <meta charset="UTF-8" />
     <title>Hello World</title>
 
-    <!-- viewer distro (without pan and zoom) -->
-    <!--
-    <script src="https://unpkg.com/bpmn-js@16.5.0/dist/bpmn-viewer.development.js"></script>
-    -->
-
-    <!-- required viewer styles -->
+    <!-- required modeler styles -->
     <link rel="stylesheet" href="https://unpkg.com/bpmn-js@16.5.0/dist/assets/bpmn-js.css">
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@16.5.0/dist/assets/diagram-js.css">
+    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@16.5.0/dist/assets/bpmn-font/css/bpmn.css">
 
-    <!-- viewer distro (with pan and zoom) -->
-    <script src="https://unpkg.com/bpmn-js@16.5.0/dist/bpmn-navigated-viewer.development.js"></script>
+    <!-- modeler distro -->
+    <script src="https://unpkg.com/bpmn-js@16.5.0/dist/bpmn-modeler.development.js"></script>
 
     <!-- needed for this example only -->
     <script src="https://unpkg.com/jquery@3.3.1/dist/jquery.js"></script>
@@ -41,23 +38,51 @@
       .needs-discussion:not(.djs-connection) .djs-visual > :nth-child(1) {
         stroke: rgba(66, 180, 21, 0.7) !important; /* color elements as red */
       }
+
+      #save-button {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+      }
     </style>
   </head>
   <body>
     <div id="canvas"></div>
 
+    <button id="save-button">print to console</button>
+
     <script>
 
       var diagramUrl = 'https://cdn.statically.io/gh/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
 
-      // viewer instance
-      var bpmnViewer = new BpmnJS({
-        container: '#canvas'
+      // modeler instance
+      var bpmnModeler = new BpmnJS({
+        container: '#canvas',
+        keyboard: {
+          bindTo: window
+        }
       });
 
+      /**
+       * Save diagram contents and print them to the console.
+       */
+      async function exportDiagram() {
+
+        try {
+
+          var result = await bpmnModeler.saveXML({ format: true });
+
+          alert('Diagram exported. Check the developer tools!');
+
+          console.log('DIAGRAM', result.xml);
+        } catch (err) {
+
+          console.error('could not save BPMN 2.0 diagram', err);
+        }
+      }
 
       /**
-       * Open diagram in our viewer instance.
+       * Open diagram in our modeler instance.
        *
        * @param {String} bpmnXML diagram to display
        */
@@ -66,11 +91,11 @@
         // import diagram
         try {
 
-          await bpmnViewer.importXML(bpmnXML);
+          await bpmnModeler.importXML(bpmnXML);
 
-          // access viewer components
-          var canvas = bpmnViewer.get('canvas');
-          var overlays = bpmnViewer.get('overlays');
+          // access modeler components
+          var canvas = bpmnModeler.get('canvas');
+          var overlays = bpmnModeler.get('overlays');
 
 
           // zoom to fit full viewport
@@ -96,23 +121,26 @@
 
       // load external diagram file via AJAX and open it
       $.get(diagramUrl, openDiagram, 'text');
+
+      // wire save button
+      $('#save-button').click(exportDiagram);
     </script>
     <!--
       Thanks for trying out our BPMN toolkit!
 
-      If you'd like to learn more about what our library,
-      continue with some more basic examples:
-      * https://github.com/bpmn-io/bpmn-js-examples/overlays
-      * https://github.com/bpmn-io/bpmn-js-examples/interaction
-      * https://github.com/bpmn-io/bpmn-js-examples/colors
-      * https://github.com/bpmn-io/bpmn-js-examples/commenting
+      This example uses the pre-built distribution of the bpmn-js modeler.
+      Consider rolling your own distribution to have more flexibility
+      regarding which features to include.
+
+      Checkout our advanced examples section to learn more:
+      * https://github.com/bpmn-io/bpmn-js-examples#advanced
 
       To get a bit broader overview over how bpmn-js works,
       follow our walkthrough:
       * https://bpmn.io/toolkit/bpmn-js/walkthrough/
 
       Related starters:
-      * https://raw.githubusercontent.com/bpmn-io/bpmn-js-examples/starter/modeler.html
+      * https://raw.githubusercontent.com/bpmn-io/bpmn-js-examples/starter/viewer.html
     -->
   </body>
 </html>
