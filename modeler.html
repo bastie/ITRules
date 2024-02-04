@@ -75,8 +75,8 @@
           alert('Diagram exported. Check the developer tools!');
 
           console.log('DIAGRAM', result.xml);
-myWindow = window.open("data:text/xml," + encodeURIComponent(result),
-                       "_blank", "width=200,height=100");
+myWindow = window.open("data:text/xml," + encodeURIComponent(result.xml),
+                       "_blank", "width=800,height=600");
 myWindow.focus();
         } catch (err) {
 
