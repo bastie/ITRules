@@ -75,9 +75,9 @@
           alert('Diagram exported. Check the developer tools!');
 
           console.log('DIAGRAM', result.xml);
-myWindow = window.open("data:text/xml," + encodeURIComponent(result.xml),
-                       "_blank", "width=800,height=600");
-myWindow.focus();
+
+document.getElementById("BPMN_value").innerHTML = result.xml;
+
         } catch (err) {
 
           console.error('could not save BPMN 2.0 diagram', err);
@@ -128,6 +128,12 @@ myWindow.focus();
       // wire save button
       $('#save-button').click(exportDiagram);
     </script>
+
+    <hr />
+    <div>
+      <pre id="BPMN_value">NONE</pre>
+    </div>
+
     <!--
       Thanks for trying out our BPMN toolkit!
 
